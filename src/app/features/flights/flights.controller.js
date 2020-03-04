@@ -17,4 +17,9 @@ export class FlightsController {
         
         return flight
     }
+    static add({ desde, hasta, aerolinea }) {
+        const flight = new Flight(desde, hasta, aerolinea)
+        return flight
+
+    }
 }

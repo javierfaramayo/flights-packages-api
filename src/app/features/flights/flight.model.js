@@ -1,5 +1,5 @@
 export class Flight {
-    constructor(id, from, to, airline) {
+    constructor(from, to, airline, id = null) {
         this.id = id
         this.from = from
         this.to = to

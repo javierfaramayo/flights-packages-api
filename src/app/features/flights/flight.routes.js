@@ -24,7 +24,10 @@ router
         res.json(FlightsController.getById(req.params.id))
     })
     .post('/', (req, res) => {
-        res.send('flights post')
+
+        const result = FlightsController.add(req.body)
+
+        res.json(result)
     })
     .put('/', (req, res) => {
         res.send('flights put')
