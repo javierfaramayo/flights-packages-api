@@ -1,11 +1,11 @@
 const config = {
     SERVER_PORT: 3000,
     DDBB: {
-        NAME: '',
-        USER: '',
+        NAME: 'flights',
+        USER: 'root',
         PASS: '',
-        PORT: '',
-        HOST: ''
+        PORT: '3306',
+        HOST: 'localhost'
     },
     JWT: {
         PRIVATE_KEY: 'secret',
