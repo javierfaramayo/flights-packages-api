@@ -2,24 +2,17 @@ import { FlightsService } from "./flight.service";
 import { Flight } from "./flight.model";
 
 export class FlightsController {
-    static getAll() {
-        const flightsDB  = FlightsService.getAllDB()
-        const mappedFlights = flightsDB.map( ({ _id, desde, hasta, aerolinea }) => {
-            return new Flight(_id, desde, hasta, aerolinea.nombre)
-        })
-
-        return mappedFlights
+    static async getAll() {
+        return await FlightsService.getAllDB()
     }
-    static getById(id) {
-        const flightsDB  = FlightsService.getAllDB()
 
-        const flight = flightsDB.filter( ({ _id }) => _id === id)
-        
-        return flight
+    static async getById(id) {
+        console.log('get one')
+        return await FlightsService.getOneById(id)
     }
-    static add({ desde, hasta, aerolinea }) {
-        const flight = new Flight(desde, hasta, aerolinea)
-        return flight
 
+    static async add({ from, to, airline }) {
+        const flight = new Flight(from, to, airline)
+        return await FlightsService.store(flight)
     }
 }

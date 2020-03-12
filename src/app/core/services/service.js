@@ -1,16 +1,25 @@
-import config from "../../../config";
-import Sequelize from 'sequelize'
-
-const dbQueryString = `mysql://${config.DDBB.USER}:${config.DDBB.PASS}@${config.DDBB.HOST}:${config.DDBB.PORT}/${config.DDBB.NAME}`
-const sequelize = new Sequelize(dbQueryString)
+import sequelize from "../../../server"
 export class Service {
 
-    async getQuery(queryString, params) {
-        console.log(queryString)
-        try {
-            return await sequelize.query(queryString, { type: sequelize.QueryTypes.SELECT })
-        } catch (error) {
-            return error
+    static async getQuery(queryString, params = []) {
+        const queryOptions = {
+            type: sequelize.QueryTypes.SELECT
         }
+
+        if(params.length) {
+            queryOptions.replacements = params
+        }
+
+        return await sequelize.query(queryString, queryOptions)
+    }
+
+    static async setQuery(queryString, params = []) {
+        const queryOptions = {}
+
+        if(params.length) {
+            queryOptions.replacements = params
+        }
+
+        return await sequelize.query(queryString, queryOptions)
     }
 }

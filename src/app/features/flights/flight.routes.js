@@ -3,36 +3,54 @@ import {FlightsController} from './flights.controller'
 const router = Router()
 
 router
-    .get('/', (req, res) => {
-        const flights = FlightsController.getAll()
-        res.json(flights)
-    })
-    .get('/:id', (req, res) => {
-        const id = parseInt(req.params.id)
+    .get('/', async (req, res) => {
 
-        if(typeof(id) === 'number') {
+        try {
+            const flights = await FlightsController.getAll()
+            res.json(flights)
 
-            const flight = FlightsController.getById(id)
-
-            if(flight.length) res.json(flight)
-            else res.status(404).send('Flight not found')
-
-        } else {
-            res.status(402).send('Bad request. Id must be a number')
+        } catch (error) {
+            res.status(500).json({ error: 'Something went wrong. Please retry or contact with an admin.', message: error})
         }
 
-        res.json(FlightsController.getById(req.params.id))
     })
-    .post('/', (req, res) => {
+    .get('/:id', async (req, res) => {     
+        try {
+            const id = req.params.id
 
-        const result = FlightsController.add(req.body)
+            const flight = await FlightsController.getById(id)
+            res.json(flight)
+        } catch (error) {
+            res.status(500).json({ error: 'Something went wrong. Please retry or contact with an admin.', message: error})
+        }
+    })
+    .post('/', async (req, res) => {
 
-        res.json(result)
+        try {            
+            await FlightsController.add(req.body)
+            res.status(201).json({ message: 'Flight created successfully.' })
+        } catch (error) {
+            res.status(500).json({ error: 'Something went wrong. Please retry or contact with an admin.', message: error})
+        }
+
     })
-    .put('/', (req, res) => {
-        res.send('flights put')
+    .put('/:id', async (req, res) => {
+        const id = parseInt(req.params.id)
+
+        if(!isNaN(id)) {
+            
+            try {
+                await FlightsController.updateById(id)
+                res.status(200).json({ message: 'Flight updated successfully.' })
+            } catch (error) {
+                res.status(500).json({ error: 'Something went wrong. Please retry or contact with an admin.', message: error})
+            }
+
+        } else {
+            res.status(402).send({ error: 'Bad request.', message: 'Id must be a number' })
+        }
     })
-    .delete('/', (req, res) => {
+    .delete('/:id', async (req, res) => {
         res.send('flights delete')
     })
 

@@ -43,9 +43,9 @@ CREATE TABLE IF NOT EXISTS `despegarch`.`user` (
   `email` VARCHAR(70) NULL,
   `role_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `dni_UNIQUE` (`dni` ASC) VISIBLE,
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
-  INDEX `fk_user_role_idx` (`role_id` ASC) VISIBLE,
+  UNIQUE INDEX `dni_UNIQUE` (`dni` ASC),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC),
+  INDEX `fk_user_role_idx` (`role_id` ASC),
   CONSTRAINT `fk_user_role`
     FOREIGN KEY (`role_id`)
     REFERENCES `despegarch`.`role` (`id`)
@@ -113,8 +113,8 @@ CREATE TABLE IF NOT EXISTS `despegarch`.`package` (
   `hotel_id` BIGINT(20) UNSIGNED NOT NULL,
   `flight_id` BIGINT(20) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_package_hotel1_idx` (`hotel_id` ASC) VISIBLE,
-  INDEX `fk_package_flight1_idx` (`flight_id` ASC) VISIBLE,
+  INDEX `fk_package_hotel1_idx` (`hotel_id` ASC),
+  INDEX `fk_package_flight1_idx` (`flight_id` ASC),
   CONSTRAINT `fk_package_hotel1`
     FOREIGN KEY (`hotel_id`)
     REFERENCES `despegarch`.`hotel` (`id`)
@@ -142,8 +142,8 @@ CREATE TABLE IF NOT EXISTS `despegarch`.`sale` (
   `package_id` INT UNSIGNED NOT NULL,
   `user_id` BIGINT(20) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_sale_package1_idx` (`package_id` ASC) VISIBLE,
-  INDEX `fk_sale_user1_idx` (`user_id` ASC) VISIBLE,
+  INDEX `fk_sale_package1_idx` (`package_id` ASC),
+  INDEX `fk_sale_user1_idx` (`user_id` ASC),
   CONSTRAINT `fk_sale_package1`
     FOREIGN KEY (`package_id`)
     REFERENCES `despegarch`.`package` (`id`)
